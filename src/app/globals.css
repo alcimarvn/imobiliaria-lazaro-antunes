@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-gold-500 selection:text-brand-950;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-900 font-bold tracking-tight;
+  }
+}
+
+/* 1. Ken Burns Effect */
+@keyframes kenburns {
+  0% {
+    transform: scale(1.0);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 6.5s ease-out forwards;
+  will-change: transform;
+}
+
+/* 2. Ouro Líquido Shimmer */
+@keyframes goldShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.text-gradient-gold {
+  background: linear-gradient(90deg, #d4a946 0%, #fae8a4 25%, #ffffff 50%, #fae8a4 75%, #d4a946 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: goldShimmer 4s ease-in-out infinite;
+}
+
+/* 3. Flutuação Suave (Float) */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+/* 4. Pulso Suave de Luz Dourada */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(227, 196, 115, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(227, 196, 115, 0.55);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 3s infinite;
+}
+
+/* 5. Efeito Shine nos Botões (Reflexo de Luz ao passar o mouse) */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  transform: rotate(25deg);
+  transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+
+.btn-shine:hover::after {
+  left: 120%;
+}
