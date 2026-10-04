@@ -33,7 +33,7 @@ export const PROPERTIES: Property[] = [
     parkingSpots: 1,
     featured: true,
     images: [
-      "/uploads/property-subtelhado-canela.jpg",
+      "/uploads/property-subtelhado-canela.webp",
       "/assets/atmosfera-investimento.jpg"
     ],
     features: [
@@ -62,7 +62,7 @@ export const PROPERTIES: Property[] = [
     parkingSpots: 1,
     featured: true,
     images: [
-      "/uploads/property-ruacoberta-gramado.png",
+      "/uploads/property-ruacoberta-gramado.webp",
       "/assets/hero-home.jpg"
     ],
     features: [
@@ -149,8 +149,8 @@ export const PROPERTIES: Property[] = [
     parkingSpots: 2,
     featured: true,
     images: [
-      "/uploads/property-subtelhado-canela.jpg",
-      "/uploads/property-lancamento-canela.jpg"
+      "/uploads/property-subtelhado-canela.webp",
+      "/uploads/property-lancamento-canela.webp"
     ],
     features: [
       "Vista deslumbrante da Catedral de Pedra",
@@ -207,7 +207,7 @@ export const PROPERTIES: Property[] = [
     parkingSpots: 1,
     featured: true,
     images: [
-      "/uploads/property-centro-gramado.png",
+      "/uploads/property-centro-gramado.webp",
       "/assets/hero-home.jpg"
     ],
     features: [
@@ -236,7 +236,7 @@ export const PROPERTIES: Property[] = [
     parkingSpots: 1,
     featured: false,
     images: [
-      "/uploads/property-resort-gramado.jpeg",
+      "/uploads/property-resort-gramado.webp",
       "/assets/atmosfera-mudanca.jpg"
     ],
     features: [
@@ -265,7 +265,7 @@ export const PROPERTIES: Property[] = [
     parkingSpots: 1,
     featured: false,
     images: [
-      "/uploads/property-mcmv-gramado.jpg"
+      "/uploads/property-mcmv-gramado.webp"
     ],
     features: [
       "Entrada facilitada",

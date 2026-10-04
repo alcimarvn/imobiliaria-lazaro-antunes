@@ -89,6 +89,23 @@ export function PropertyDetailsClient({
   const images: string[] = property.images && property.images.length > 0 ? property.images : ["/assets/hero-home.jpg"];
   const captions: string[] = (property as any).image_captions || (property as any).imageCaptions || [];
 
+  // Helper para obter URL otimizada de thumbnail (~6KB a 10KB para carregamento instantâneo)
+  const getThumbUrl = (url: string) => {
+    if (!url) return "/assets/hero-home.jpg";
+    if (url.startsWith("/uploads/")) {
+      return url.replace(/\.(jpeg|jpg|png|webp)$/i, "-thumb.webp");
+    }
+    return url;
+  };
+
+  // Pré-carregamento suave em memória sob demanda
+  const preloadImage = (src: string) => {
+    if (typeof window !== "undefined" && src) {
+      const img = new window.Image();
+      img.src = src;
+    }
+  };
+
   // Descrição / Legenda vinda do banco de dados (com fallback contextual se vazia)
   const getImageDescription = (index: number) => {
     // 1. PRIORIDADE MÁXIMA: Se a imagem tem legenda cadastrada no banco de dados, utiliza ela diretamente!
@@ -265,6 +282,7 @@ export function PropertyDetailsClient({
               alt={`${property.title} - ${getImageDescription(activePhotoIndex)}`}
               fill
               priority
+              loading="eager"
               sizes="(max-width: 1280px) 100vw, 1280px"
               className="object-cover group-hover:scale-102 transition-transform duration-700 ease-out"
             />
@@ -336,34 +354,45 @@ export function PropertyDetailsClient({
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5 sm:gap-3">
-              {images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActivePhotoIndex(idx)}
-                  className={`group relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer shadow-xs ${
-                    activePhotoIndex === idx
-                      ? "border-gold-500 ring-4 ring-gold-400/25 scale-103 shadow-md"
-                      : "border-slate-200 hover:border-slate-400 opacity-75 hover:opacity-100"
-                  }`}
-                  title={getImageDescription(idx)}
-                >
-                  <Image
-                    src={img}
-                    alt={`Miniatura ${idx + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 33vw, 16vw"
-                    className="object-cover group-hover:scale-108 transition-transform duration-300"
-                  />
-                  {/* Badge de numeração da miniatura */}
-                  <span className={`absolute bottom-1 right-1 text-[10px] font-bold px-1.5 py-0.5 rounded backdrop-blur-xs ${
-                    activePhotoIndex === idx
-                      ? "bg-gold-500 text-brand-950"
-                      : "bg-black/60 text-white"
-                  }`}>
-                    {idx + 1}
-                  </span>
-                </button>
-              ))}
+              {images.map((img, idx) => {
+                const thumbSrc = getThumbUrl(img);
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActivePhotoIndex(idx)}
+                    onMouseEnter={() => preloadImage(img)}
+                    className={`group relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer shadow-xs ${
+                      activePhotoIndex === idx
+                        ? "border-gold-500 ring-4 ring-gold-400/25 scale-103 shadow-md"
+                        : "border-slate-200 hover:border-slate-400 opacity-80 hover:opacity-100"
+                    }`}
+                    title={getImageDescription(idx)}
+                  >
+                    <Image
+                      src={thumbSrc}
+                      alt={`Miniatura ${idx + 1}`}
+                      fill
+                      loading="lazy"
+                      sizes="(max-width: 768px) 33vw, 16vw"
+                      className="object-cover group-hover:scale-108 transition-transform duration-300"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target && target.src !== img) {
+                          target.src = img;
+                        }
+                      }}
+                    />
+                    {/* Badge de numeração da miniatura */}
+                    <span className={`absolute bottom-1 right-1 text-[10px] font-bold px-1.5 py-0.5 rounded backdrop-blur-xs ${
+                      activePhotoIndex === idx
+                        ? "bg-gold-500 text-brand-950"
+                        : "bg-black/60 text-white"
+                    }`}>
+                      {idx + 1}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -905,7 +934,18 @@ export function PropertyDetailsClient({
                     activePhotoIndex === idx ? "border-gold-400 scale-105" : "border-transparent opacity-60 hover:opacity-100"
                   }`}
                 >
-                  <Image src={img} alt="" fill sizes="64px" className="object-cover" />
+                  <Image
+                    src={getThumbUrl(img)}
+                    alt=""
+                    fill
+                    loading="lazy"
+                    sizes="64px"
+                    className="object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (target && target.src !== img) target.src = img;
+                    }}
+                  />
                 </button>
               ))}
             </div>
