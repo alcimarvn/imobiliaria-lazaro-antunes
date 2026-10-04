@@ -22,7 +22,7 @@ const CATEGORIES: CategoryCard[] = [
     sublabel: "Estilo suíço e alpino com lareira",
     type: "Chale",
     badge: "Refúgio da Serra",
-    image: "/assets/cat-chale.jpg",
+    image: "/assets/cat-chale.webp",
     icon: TreePine,
   },
   {
@@ -30,7 +30,7 @@ const CATEGORIES: CategoryCard[] = [
     sublabel: "Segurança armada 24h e bosques",
     type: "Casa",
     badge: "Privacidade & Lazer",
-    image: "/assets/cat-casa.jpg",
+    image: "/assets/cat-casa.webp",
     icon: Home,
   },
   {
@@ -38,7 +38,7 @@ const CATEGORIES: CategoryCard[] = [
     sublabel: "A poucos passos da Rua Coberta",
     type: "Apartamento",
     badge: "Praticidade & Renda",
-    image: "/assets/cat-apartamento.jpg",
+    image: "/assets/cat-apartamento.webp",
     icon: Building2,
   },
   {
@@ -46,7 +46,7 @@ const CATEGORIES: CategoryCard[] = [
     sublabel: "Vistas panorâmicas e terraço gourmet",
     type: "Cobertura",
     badge: "Alto Luxo Exclusivo",
-    image: "/assets/cat-cobertura.jpg",
+    image: "/assets/cat-cobertura.webp",
     icon: Sparkles,
   },
   {
@@ -54,7 +54,7 @@ const CATEGORIES: CategoryCard[] = [
     sublabel: "Para construir seu projeto sob medida",
     type: "Terreno",
     badge: "Potencial & Natureza",
-    image: "/assets/cat-terreno.jpg",
+    image: "/assets/cat-terreno.webp",
     icon: Compass,
   },
 ];
@@ -118,6 +118,7 @@ export function QuickCategoryChips() {
                     src={cat.image}
                     alt={cat.label}
                     fill
+                    loading="lazy"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                   />

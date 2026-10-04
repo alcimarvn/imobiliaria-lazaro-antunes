@@ -117,9 +117,10 @@ export default function HomePage() {
               <div className="group relative h-full min-h-[500px] flex flex-col justify-between p-8 sm:p-10 rounded-3xl overflow-hidden border border-slate-200 hover:border-gold-400/80 transition-colors">
                 {/* Imagem de Fundo com Zoom Suave */}
                 <Image
-                  src="/assets/atmosfera-mudanca.jpg"
+                  src="/assets/atmosfera-mudanca.webp"
                   alt="Floresta de pinheiros e araucárias ao amanhecer na Serra Gaúcha"
                   fill
+                  loading="lazy"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
@@ -185,9 +186,10 @@ export default function HomePage() {
               <div className="group relative h-full min-h-[500px] flex flex-col justify-between p-8 sm:p-10 rounded-3xl overflow-hidden border border-slate-200 hover:border-gold-400/80 transition-colors">
                 {/* Imagem de Fundo com Zoom Suave */}
                 <Image
-                  src="/assets/atmosfera-investimento.jpg"
+                  src="/assets/atmosfera-investimento.webp"
                   alt="Chalé de alto padrão em pedra e madeira na Serra Gaúcha"
                   fill
+                  loading="lazy"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
@@ -305,9 +307,10 @@ export default function HomePage() {
             <div className="group h-full bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl hover:border-gold-300 transition-all duration-300 flex flex-col">
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <Image
-                  src="/assets/lifestyle-seguranca.jpg"
+                  src="/assets/lifestyle-seguranca.webp"
                   alt="Segurança e tranquilidade nas ruas de Gramado"
                   fill
+                  loading="lazy"
                   className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
@@ -339,9 +342,10 @@ export default function HomePage() {
             <div className="group h-full bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl hover:border-gold-300 transition-all duration-300 flex flex-col">
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <Image
-                  src="/assets/lifestyle-turismo.jpg"
+                  src="/assets/lifestyle-turismo.webp"
                   alt="Turistas na Rua Coberta em Gramado"
                   fill
+                  loading="lazy"
                   className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
@@ -373,9 +377,10 @@ export default function HomePage() {
             <div className="group h-full bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl hover:border-gold-300 transition-all duration-300 flex flex-col">
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <Image
-                  src="/assets/lifestyle-gastronomia.jpg"
+                  src="/assets/lifestyle-gastronomia.webp"
                   alt="Alta gastronomia e fondue na Serra Gaúcha"
                   fill
+                  loading="lazy"
                   className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
@@ -407,9 +412,10 @@ export default function HomePage() {
             <div className="group h-full bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl hover:border-gold-300 transition-all duration-300 flex flex-col">
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <Image
-                  src="/assets/lifestyle-natureza.jpg"
+                  src="/assets/lifestyle-natureza.webp"
                   alt="Natureza serena, bosques e araucárias na Serra Gaúcha"
                   fill
+                  loading="lazy"
                   className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
@@ -542,9 +548,10 @@ export default function HomePage() {
                 {/* 1. Imagem de Fundo: Vista Aérea Oficial de Gramado */}
                 <div className="absolute inset-0 z-0 overflow-hidden">
                   <Image
-                    src="/assets/gramado-aerea.jpg"
+                    src="/assets/gramado-aerea.webp"
                     alt="Vista aérea de Gramado com condomínios e relevo da Serra Gaúcha"
                     fill
+                    loading="lazy"
                     sizes="(max-width: 768px) 100vw, 480px"
                     className="object-cover group-hover:scale-115 group-hover:brightness-90 transition-transform duration-700 ease-out"
                   />
@@ -573,9 +580,9 @@ export default function HomePage() {
                     src="/assets/lazaro-antunes-recorte.webp"
                     alt="Lázaro Antunes, consultor imobiliário na Serra Gaúcha"
                     fill
+                    loading="lazy"
                     sizes="(max-width: 768px) 100vw, 440px"
                     className="object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)] group-hover:drop-shadow-[0_20px_45px_rgba(212,169,70,0.5)] origin-bottom group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-500 ease-out"
-                    priority
                   />
                 </div>
 

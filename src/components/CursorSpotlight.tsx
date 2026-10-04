@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 export function CursorSpotlight() {
-  const [position, setPosition] = useState({ x: -200, y: -200 });
-  const [isVisible, setIsVisible] = useState(false);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Desativa em dispositivos touch
-    if (window.matchMedia("(pointer: coarse)").matches) {
+    // Desativa em dispositivos touch ou sem ponteiro fino
+    if (typeof window === "undefined" || window.matchMedia("(pointer: coarse)").matches) {
       return;
     }
 
@@ -17,28 +17,36 @@ export function CursorSpotlight() {
     let targetX = -200;
     let targetY = -200;
     let animationFrameId: number;
+    let visible = false;
 
     const handleMouseMove = (e: MouseEvent) => {
       targetX = e.clientX;
       targetY = e.clientY;
-      if (!isVisible) setIsVisible(true);
+      if (!visible) {
+        visible = true;
+        if (containerRef.current) containerRef.current.style.opacity = "1";
+      }
     };
 
     const handleMouseLeave = () => {
-      setIsVisible(false);
+      visible = false;
+      if (containerRef.current) containerRef.current.style.opacity = "0";
     };
 
     const animate = () => {
       // Interpolação suave (lerp) para movimento orgânico
-      currentX += (targetX - currentX) * 0.12;
-      currentY += (targetY - currentY) * 0.12;
+      currentX += (targetX - currentX) * 0.15;
+      currentY += (targetY - currentY) * 0.15;
 
-      setPosition({ x: currentX, y: currentY });
+      if (spotlightRef.current) {
+        spotlightRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      }
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    document.addEventListener("mouseleave", handleMouseLeave, { passive: true });
     animationFrameId = requestAnimationFrame(animate);
 
     return () => {
@@ -46,22 +54,19 @@ export function CursorSpotlight() {
       document.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isVisible]);
-
-  if (!isVisible) return null;
+  }, []);
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-500 overflow-hidden"
-      style={{ opacity: isVisible ? 1 : 0 }}
+      ref={containerRef}
+      className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 overflow-hidden opacity-0"
       aria-hidden="true"
     >
       <div
-        className="absolute w-[450px] h-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl pointer-events-none"
+        ref={spotlightRef}
+        className="absolute top-0 left-0 w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl pointer-events-none will-change-transform"
         style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          background: "radial-gradient(circle, rgba(227, 196, 115, 0.07) 0%, rgba(15, 42, 74, 0.05) 50%, transparent 75%)",
+          background: "radial-gradient(circle, rgba(227, 196, 115, 0.08) 0%, rgba(15, 42, 74, 0.04) 50%, transparent 75%)",
         }}
       />
     </div>

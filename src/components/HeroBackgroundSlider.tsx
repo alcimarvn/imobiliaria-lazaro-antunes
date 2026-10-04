@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -13,7 +13,7 @@ interface Slide {
 
 const HERO_SLIDES: Slide[] = [
   {
-    url: "/assets/hero-gramado-igreja.jpg",
+    url: "/assets/hero-gramado-igreja.webp",
     alt: "Igreja Matriz São Pedro iluminada à noite no centro de Gramado",
     location: "Igreja Matriz & Centro Iluminado",
     city: "Gramado",
@@ -31,13 +31,13 @@ const HERO_SLIDES: Slide[] = [
     city: "Gramado",
   },
   {
-    url: "/assets/hero-canela-cascata-caracol.jpg",
+    url: "/assets/hero-canela-cascata-caracol.webp",
     alt: "Bondinhos aéreos com vista panorâmica para a Cascata do Caracol em Canela",
     location: "Bondinhos & Cascata do Caracol",
     city: "Canela",
   },
   {
-    url: "/assets/hero-canela-roda-gigante.jpg",
+    url: "/assets/hero-canela-roda-gigante.webp",
     alt: "Roda Gigante de Canela e vista das araucárias da serra",
     location: "Roda Canela & Parques da Serra",
     city: "Canela",
@@ -73,6 +73,8 @@ export function HeroBackgroundSlider() {
               alt={slide.alt}
               fill
               priority={index === 0}
+              loading={index === 0 ? "eager" : "lazy"}
+              sizes="100vw"
               className={`object-cover ${isActive ? "animate-kenburns" : ""}`}
             />
           </div>
