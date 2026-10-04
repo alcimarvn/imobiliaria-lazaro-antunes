@@ -543,7 +543,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noreferrer"
                 title="Clique para conversar diretamente com Lázaro Antunes via WhatsApp"
-                className="group relative w-full max-w-sm sm:max-w-md h-[520px] sm:h-[590px] rounded-3xl overflow-hidden border-2 border-gold-400/40 hover:border-gold-400 shadow-2xl hover:shadow-[0_0_45px_rgba(212,169,70,0.45)] flex items-end justify-center cursor-pointer transition-all duration-500 block"
+                className="group relative w-full max-w-sm sm:max-w-md h-[440px] sm:h-[540px] md:h-[590px] rounded-3xl overflow-hidden border-2 border-gold-400/40 hover:border-gold-400 shadow-2xl hover:shadow-[0_0_45px_rgba(212,169,70,0.45)] flex items-end justify-center cursor-pointer transition-all duration-500 block"
               >
                 {/* 1. Imagem de Fundo: Vista Aérea Oficial de Gramado */}
                 <div className="absolute inset-0 z-0 overflow-hidden">

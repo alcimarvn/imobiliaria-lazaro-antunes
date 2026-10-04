@@ -32,6 +32,10 @@ export function TiltCard({
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      // Desativa totalmente em telas touch para não travar o scroll vertical no celular
+      if (typeof window !== "undefined" && (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches)) {
+        return;
+      }
       if (!cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       const width = rect.width;

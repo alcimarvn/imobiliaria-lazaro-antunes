@@ -46,10 +46,31 @@ const HERO_SLIDES: Slide[] = [
 
 export function HeroBackgroundSlider() {
   const [current, setCurrent] = useState(0);
+  const [loadedIndices, setLoadedIndices] = useState<number[]>([0]);
+
+  // Carregar os próximos slides progressivamente após o carregamento inicial da página
+  useEffect(() => {
+    // Após 1.5s, começa a liberar o próximo slide em segundo plano
+    const preloadTimer = setTimeout(() => {
+      setLoadedIndices((prev) => {
+        const nextIdx = (current + 1) % HERO_SLIDES.length;
+        if (!prev.includes(nextIdx)) {
+          return [...prev, nextIdx];
+        }
+        return prev;
+      });
+    }, 1500);
+
+    return () => clearTimeout(preloadTimer);
+  }, [current]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % HERO_SLIDES.length);
+      setCurrent((prev) => {
+        const next = (prev + 1) % HERO_SLIDES.length;
+        setLoadedIndices((loaded) => (loaded.includes(next) ? loaded : [...loaded, next]));
+        return next;
+      });
     }, 6000); // 6 segundos de exibição contínua para cada foto
 
     return () => clearInterval(timer);
@@ -60,6 +81,12 @@ export function HeroBackgroundSlider() {
       {/* Imagens com Efeito Ken Burns Contínuo durante toda a exibição */}
       {HERO_SLIDES.map((slide, index) => {
         const isActive = index === current;
+        const shouldRender = loadedIndices.includes(index) || isActive;
+
+        if (!shouldRender) {
+          return null;
+        }
+
         return (
           <div
             key={slide.url}

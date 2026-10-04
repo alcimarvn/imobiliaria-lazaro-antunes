@@ -88,8 +88,8 @@ export function Navbar({ broker }: { broker?: BrokerInfo } = {}) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 gap-4">
           {/* Logo com Foto Oficial do Corretor */}
-          <Link href="/" className="flex items-center gap-3.5 group shrink-0">
-            <div className="relative w-12 h-12 rounded-xl bg-brand-900 border-2 border-gold-400/80 overflow-hidden shadow-sm group-hover:border-gold-300 group-hover:scale-105 transition-all shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group min-w-0">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-brand-900 border-2 border-gold-400/80 overflow-hidden shadow-sm group-hover:border-gold-300 group-hover:scale-105 transition-all shrink-0">
               <Image
                 src="/assets/lazaro-antunes-recorte.webp"
                 alt={currentBroker.name}
@@ -99,12 +99,12 @@ export function Navbar({ broker }: { broker?: BrokerInfo } = {}) {
                 priority
               />
             </div>
-            <div>
-              <span className="block font-heading text-xl sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-brand-900 transition-colors">
+            <div className="min-w-0">
+              <span className="block font-heading text-base sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-brand-900 transition-colors truncate">
                 {currentBroker.name}
               </span>
-              <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Corretor de Imóveis • CRECI {currentBroker.creci}
+              <span className="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">
+                Corretor • CRECI {currentBroker.creci}
               </span>
             </div>
           </Link>

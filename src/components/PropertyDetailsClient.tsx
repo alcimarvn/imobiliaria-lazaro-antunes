@@ -353,7 +353,7 @@ export function PropertyDetailsClient({
               <span className="text-brand-900 font-bold">Clique em qualquer foto para selecionar</span>
             </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5 sm:gap-3">
+            <div className="flex sm:grid overflow-x-auto sm:overflow-visible gap-2 sm:gap-3 pb-2 sm:pb-0 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid-cols-4 md:grid-cols-6">
               {images.map((img, idx) => {
                 const thumbSrc = getThumbUrl(img);
                 return (
@@ -361,7 +361,7 @@ export function PropertyDetailsClient({
                     key={idx}
                     onClick={() => setActivePhotoIndex(idx)}
                     onMouseEnter={() => preloadImage(img)}
-                    className={`group relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer shadow-xs ${
+                    className={`group relative w-24 h-16 sm:w-auto sm:h-auto sm:aspect-video shrink-0 sm:shrink rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer shadow-xs ${
                       activePhotoIndex === idx
                         ? "border-gold-500 ring-4 ring-gold-400/25 scale-103 shadow-md"
                         : "border-slate-200 hover:border-slate-400 opacity-80 hover:opacity-100"
@@ -373,7 +373,7 @@ export function PropertyDetailsClient({
                       alt={`Miniatura ${idx + 1}`}
                       fill
                       loading="lazy"
-                      sizes="(max-width: 768px) 33vw, 16vw"
+                      sizes="(max-width: 640px) 96px, 16vw"
                       className="object-cover group-hover:scale-108 transition-transform duration-300"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
@@ -856,7 +856,7 @@ export function PropertyDetailsClient({
       </div>
 
       {/* Barra Fixa Flutuante no Mobile (Sticky Bottom Bar) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 px-4 shadow-2xl flex items-center justify-between gap-3">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-2xl flex items-center justify-between gap-3">
         <div>
           <span className="text-[10px] uppercase font-bold text-slate-500 block">Valor</span>
           <span className="text-base font-black text-slate-900">{formatCurrency(property.price)}</span>

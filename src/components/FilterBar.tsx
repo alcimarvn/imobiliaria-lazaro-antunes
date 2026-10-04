@@ -221,8 +221,8 @@ export function FilterBar({
         )}
       </div>
 
-      {/* Selects em Colunas (5 colunas responsivas) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 text-left pt-1 border-t border-slate-100">
+      {/* Selects em Colunas (2 colunas no mobile, 5 colunas no desktop) */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 text-left pt-1 border-t border-slate-100">
         {/* Cidade */}
         <div className="space-y-1">
           <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1">
@@ -320,7 +320,7 @@ export function FilterBar({
         </div>
 
         {/* Quartos */}
-        <div className="space-y-1">
+        <div className="col-span-2 sm:col-span-1 space-y-1">
           <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1">
             <BedDouble className="w-3 h-3 text-brand-900" />
             <span>Quartos</span>

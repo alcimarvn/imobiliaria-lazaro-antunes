@@ -96,23 +96,23 @@ export function QuickCategoryChips() {
           </Link>
         </div>
 
-        {/* Grid de 5 Cards Visuais Imersivos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        {/* Grid de 5 Cards Visuais Imersivos (Carrossel Horizontal no Mobile, Grid no Desktop) */}
+        <div className="flex sm:grid overflow-x-auto sm:overflow-visible snap-x snap-mandatory gap-4 sm:grid-cols-2 lg:grid-cols-5 pb-3 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar">
           {CATEGORIES.map((cat) => {
             const Icon = cat.icon;
             const countLabel = getCount(cat.type);
 
             return (
-              <TiltCard
-                key={cat.type}
-                maxRotation={6}
-                scale={1.03}
-                className="h-full rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300"
-              >
-                <Link
-                  href={`/imoveis?type=${cat.type}`}
-                  className="group relative h-[310px] w-full flex flex-col justify-between p-5 rounded-2xl overflow-hidden block border border-slate-200/80 hover:border-gold-400 transition-colors"
+              <div key={cat.type} className="w-[240px] shrink-0 snap-start sm:w-auto">
+                <TiltCard
+                  maxRotation={6}
+                  scale={1.03}
+                  className="h-full rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300"
                 >
+                  <Link
+                    href={`/imoveis?type=${cat.type}`}
+                    className="group relative h-[290px] sm:h-[310px] w-full flex flex-col justify-between p-5 rounded-2xl overflow-hidden block border border-slate-200/80 hover:border-gold-400 transition-colors"
+                  >
                   {/* Foto de Fundo em Alta Resolução */}
                   <Image
                     src={cat.image}
@@ -158,8 +158,9 @@ export function QuickCategoryChips() {
                   </div>
                 </Link>
               </TiltCard>
-            );
-          })}
+            </div>
+          );
+        })}
         </div>
       </div>
     </section>

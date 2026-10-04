@@ -35,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`scroll-smooth ${sans.variable} ${heading.variable}`}>
-      <body className="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-900 selection:text-white">
+      <body className="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-900 selection:text-white overflow-x-hidden">
         {children}
       </body>
     </html>
