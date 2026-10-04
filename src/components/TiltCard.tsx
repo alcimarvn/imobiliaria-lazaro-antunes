@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -20,19 +20,11 @@ export function TiltCard({
   glareOpacity = 0.3,
 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState<string>(
-    "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)"
-  );
-  const [glarePosition, setGlarePosition] = useState<{ x: number; y: number; opacity: number }>({
-    x: 50,
-    y: 50,
-    opacity: 0,
-  });
-  const [isHovered, setIsHovered] = useState(false);
+  const glareRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      // Desativa totalmente em telas touch para não travar o scroll vertical no celular
+      // Desativa totalmente em mobile e telas touch para garantir scroll suave a 120fps
       if (typeof window !== "undefined" && (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches)) {
         return;
       }
@@ -47,32 +39,33 @@ export function TiltCard({
       const rotateY = mouseX * maxRotation;
       const rotateX = -mouseY * maxRotation;
 
-      setTransform(
-        `perspective(${perspective}px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(
-          2
-        )}deg) scale3d(${scale}, ${scale}, ${scale})`
-      );
+      // Manipula��o direta do DOM via CSS transform do compositor (Zero re-renders React)
+      cardRef.current.style.transform = `perspective(${perspective}px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(${scale}, ${scale}, ${scale})`;
 
-      const glareX = ((e.clientX - rect.left) / width) * 100;
-      const glareY = ((e.clientY - rect.top) / height) * 100;
-
-      setGlarePosition({
-        x: glareX,
-        y: glareY,
-        opacity: glareOpacity,
-      });
+      if (glareRef.current) {
+        const glareX = ((e.clientX - rect.left) / width) * 100;
+        const glareY = ((e.clientY - rect.top) / height) * 100;
+        glareRef.current.style.opacity = `${glareOpacity}`;
+        glareRef.current.style.background = `radial-gradient(circle 280px at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.4), rgba(227, 196, 115, 0.15) 45%, transparent 80%)`;
+      }
     },
     [maxRotation, perspective, scale, glareOpacity]
   );
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
+    if (cardRef.current) {
+      cardRef.current.style.transition = "transform 0.08s ease-out";
+    }
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTransform(`perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`);
-    setGlarePosition((prev) => ({ ...prev, opacity: 0 }));
+    if (cardRef.current) {
+      cardRef.current.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
+      cardRef.current.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    }
+    if (glareRef.current) {
+      glareRef.current.style.opacity = "0";
+    }
   };
 
   return (
@@ -82,21 +75,16 @@ export function TiltCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform,
-        transition: isHovered
-          ? "transform 0.08s ease-out"
-          : "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)",
+        transform: `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
         transformStyle: "preserve-3d",
       }}
       className={`relative will-change-transform ${className}`}
     >
       {children}
       <div
-        className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden transition-opacity duration-300 z-30"
-        style={{
-          opacity: glarePosition.opacity,
-          background: `radial-gradient(circle 280px at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, 0.4), rgba(227, 196, 115, 0.15) 45%, transparent 80%)`,
-        }}
+        ref={glareRef}
+        className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden transition-opacity duration-300 z-30 opacity-0"
+        aria-hidden="true"
       />
     </div>
   );

@@ -16,8 +16,29 @@ export function CursorSpotlight() {
     let currentY = -200;
     let targetX = -200;
     let targetY = -200;
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
+    let isRunning = false;
     let visible = false;
+
+    const animate = () => {
+      const dx = targetX - currentX;
+      const dy = targetY - currentY;
+
+      currentX += dx * 0.15;
+      currentY += dy * 0.15;
+
+      if (spotlightRef.current) {
+        spotlightRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      }
+
+      // Se j� alcan�ou a posi��o do cursor (diferen�a desprez�vel), desliga o loop para liberar CPU
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        isRunning = false;
+        animationFrameId = null;
+      }
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
       targetX = e.clientX;
@@ -26,6 +47,10 @@ export function CursorSpotlight() {
         visible = true;
         if (containerRef.current) containerRef.current.style.opacity = "1";
       }
+      if (!isRunning) {
+        isRunning = true;
+        animationFrameId = requestAnimationFrame(animate);
+      }
     };
 
     const handleMouseLeave = () => {
@@ -33,26 +58,13 @@ export function CursorSpotlight() {
       if (containerRef.current) containerRef.current.style.opacity = "0";
     };
 
-    const animate = () => {
-      // Interpolação suave (lerp) para movimento orgânico
-      currentX += (targetX - currentX) * 0.15;
-      currentY += (targetY - currentY) * 0.15;
-
-      if (spotlightRef.current) {
-        spotlightRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-      }
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave, { passive: true });
-    animationFrameId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
 

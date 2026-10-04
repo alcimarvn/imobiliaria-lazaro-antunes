@@ -14,31 +14,31 @@ interface Slide {
 const HERO_SLIDES: Slide[] = [
   {
     url: "/assets/hero-gramado-igreja.webp",
-    alt: "Igreja Matriz São Pedro iluminada à noite no centro de Gramado",
+    alt: "Igreja Matriz S�o Pedro iluminada � noite no centro de Gramado",
     location: "Igreja Matriz & Centro Iluminado",
     city: "Gramado",
   },
   {
     url: "/assets/hero-canela-catedral-pedra.webp",
     alt: "Catedral de Pedra Nossa Senhora de Lourdes em Canela",
-    location: "Catedral de Pedra & Praça Central",
+    location: "Catedral de Pedra & Pra�a Central",
     city: "Canela",
   },
   {
     url: "/assets/hero-gramado-portico.webp",
-    alt: "Pórtico de entrada estilo bávaro de Gramado",
-    location: "Pórtico de Entrada Turístico",
+    alt: "P�rtico de entrada estilo b�varo de Gramado",
+    location: "P�rtico de Entrada Tur�stico",
     city: "Gramado",
   },
   {
     url: "/assets/hero-canela-cascata-caracol.webp",
-    alt: "Bondinhos aéreos com vista panorâmica para a Cascata do Caracol em Canela",
+    alt: "Bondinhos a�reos com vista panor�mica para a Cascata do Caracol em Canela",
     location: "Bondinhos & Cascata do Caracol",
     city: "Canela",
   },
   {
     url: "/assets/hero-canela-roda-gigante.webp",
-    alt: "Roda Gigante de Canela e vista das araucárias da serra",
+    alt: "Roda Gigante de Canela e vista das arauc�rias da serra",
     location: "Roda Canela & Parques da Serra",
     city: "Canela",
   },
@@ -48,9 +48,8 @@ export function HeroBackgroundSlider() {
   const [current, setCurrent] = useState(0);
   const [loadedIndices, setLoadedIndices] = useState<number[]>([0]);
 
-  // Carregar os próximos slides progressivamente após o carregamento inicial da página
+  // Carregar os pr�ximos slides progressivamente em segundo plano apenas ap�s a renderiza��o inicial
   useEffect(() => {
-    // Após 1.5s, começa a liberar o próximo slide em segundo plano
     const preloadTimer = setTimeout(() => {
       setLoadedIndices((prev) => {
         const nextIdx = (current + 1) % HERO_SLIDES.length;
@@ -59,7 +58,7 @@ export function HeroBackgroundSlider() {
         }
         return prev;
       });
-    }, 1500);
+    }, 3000);
 
     return () => clearTimeout(preloadTimer);
   }, [current]);
@@ -71,14 +70,14 @@ export function HeroBackgroundSlider() {
         setLoadedIndices((loaded) => (loaded.includes(next) ? loaded : [...loaded, next]));
         return next;
       });
-    }, 6000); // 6 segundos de exibição contínua para cada foto
+    }, 7000); // 7 segundos de exibi��o cont�nua para cada foto
 
     return () => clearInterval(timer);
   }, []);
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
-      {/* Imagens com Efeito Ken Burns Contínuo durante toda a exibição */}
+      {/* Imagens com Efeito Ken Burns Cont�nuo */}
       {HERO_SLIDES.map((slide, index) => {
         const isActive = index === current;
         const shouldRender = loadedIndices.includes(index) || isActive;
@@ -100,7 +99,6 @@ export function HeroBackgroundSlider() {
               alt={slide.alt}
               fill
               priority={index === 0}
-              loading={index === 0 ? "eager" : "lazy"}
               sizes="100vw"
               className={`object-cover ${isActive ? "animate-kenburns" : ""}`}
             />
@@ -108,14 +106,14 @@ export function HeroBackgroundSlider() {
         );
       })}
 
-      {/* Camada de Sobreposição Azul Marinho com 50% de Transparência Exata */}
+      {/* Camada de Sobreposi��o Azul Marinho com 50% de Transpar�ncia Exata */}
       <div className="absolute inset-0 bg-brand-950/50 z-10 pointer-events-none" />
 
-      {/* Etiqueta Flutuante da Cidade e Ponto Turístico */}
+      {/* Etiqueta Flutuante da Cidade e Ponto Tur�stico */}
       <div className="absolute bottom-6 right-6 z-20 hidden sm:flex items-center gap-3 bg-brand-950/80 backdrop-blur-md px-4 py-2 rounded-full border border-brand-800 text-xs text-white shadow-xl">
         <MapPin className="w-3.5 h-3.5 text-gold-400 shrink-0" />
         <span className="font-bold text-gold-300">
-          {HERO_SLIDES[current].city} • RS
+          {HERO_SLIDES[current].city} � RS
         </span>
         <span className="text-slate-300">({HERO_SLIDES[current].location})</span>
 
